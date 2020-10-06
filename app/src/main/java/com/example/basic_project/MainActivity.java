@@ -2,21 +2,12 @@ package com.example.basic_project;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ScrollView;
-import android.widget.TextView;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -52,14 +43,52 @@ public class MainActivity extends AppCompatActivity {
         ListView listOfProducts = findViewById(R.id.listOfProducts);
         listOfProducts.setAdapter(adapter);
 
+/*********************
+ * FILER BY YEAR BUTTON
+ */
+        Button filterResultsByYearButton = findViewById(R.id.filterByYear);
 
-        Button button = findViewById(R.id.testButton);
-
-        button.setOnClickListener(new View.OnClickListener() {
+        filterResultsByYearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                ArrayList<ShopItem> filteredList = getItemsFromCurrentWeek(shopItems);
+                ArrayList<ShopItem> filteredList = getItemsFromCurrentCalendarParameter(shopItems, Calendar.YEAR);
+
+                ShopItemsListAdapter adapter = new ShopItemsListAdapter(getApplicationContext(), filteredList);
+                ListView listOfProducts = findViewById(R.id.listOfProducts);
+                listOfProducts.setAdapter(adapter);
+
+            }
+        });
+
+/*********************
+ * FILER BY MONTH BUTTON
+ */
+        Button filterResultsByMonthButton = findViewById(R.id.filterByMonth);
+
+        filterResultsByMonthButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                ArrayList<ShopItem> filteredList = getItemsFromCurrentCalendarParameter(shopItems, Calendar.MONTH);
+
+                ShopItemsListAdapter adapter = new ShopItemsListAdapter(getApplicationContext(), filteredList);
+                ListView listOfProducts = findViewById(R.id.listOfProducts);
+                listOfProducts.setAdapter(adapter);
+
+            }
+        });
+
+/*********************
+ * FILER BY WEEK BUTTON
+ */
+        Button filterResultsByWeekButton = findViewById(R.id.filterByWeek2);
+
+        filterResultsByWeekButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                ArrayList<ShopItem> filteredList = getItemsFromCurrentCalendarParameter(shopItems, Calendar.WEEK_OF_YEAR);
 
                 ShopItemsListAdapter adapter = new ShopItemsListAdapter(getApplicationContext(), filteredList);
                 ListView listOfProducts = findViewById(R.id.listOfProducts);
@@ -73,15 +102,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public ArrayList<ShopItem> getItemsFromCurrentWeek(ArrayList<ShopItem> items) {
+    public ArrayList<ShopItem> getItemsFromCurrentCalendarParameter(ArrayList<ShopItem> items, int calendarParameter) {
 
         ArrayList<ShopItem> filteredShopItems = new ArrayList<>();
         Calendar currentDate = GregorianCalendar.getInstance();
-        int currentWeekOfYear = currentDate.get(Calendar.WEEK_OF_YEAR);
+        int currentWeekOfYear = currentDate.get(calendarParameter);
 
         for(ShopItem shopItem : items) {
 
-            int weekOfYearInList = shopItem.getDatePurchased().get(Calendar.WEEK_OF_YEAR);
+            int weekOfYearInList = shopItem.getDatePurchased().get(calendarParameter);
 
             if(currentWeekOfYear == weekOfYearInList) {
                 filteredShopItems.add(shopItem);
