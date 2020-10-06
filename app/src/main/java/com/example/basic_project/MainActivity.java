@@ -51,6 +51,10 @@ public class MainActivity extends AppCompatActivity {
                 filterByMonthToEnable.setEnabled(true);
                 filterByYearToEnable.setEnabled(true);
 
+                EditText searchField = findViewById(R.id.searchBar);
+
+                searchField.setText("");
+
                 currentDisplayedList.clear();
                 currentDisplayedList.addAll(shopItems);
 
