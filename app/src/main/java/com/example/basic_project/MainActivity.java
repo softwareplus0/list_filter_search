@@ -3,9 +3,12 @@ package com.example.basic_project;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -16,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     ArrayList<ShopItem> shopItems = new ArrayList<>();
+    ArrayList<ShopItem> currentDisplayedList = new ArrayList<>();
 
 
     @Override
@@ -24,17 +28,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         getList();
-
-   /*     Button changeTextButton = findViewById(R.id.changeTextButton_1);
-
-        changeTextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TextView textToChange = findViewById(R.id.textToChange);
-                textToChange.setText("TEST");
-            }
-        });
-*/
 
 
 
@@ -52,9 +45,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                ArrayList<ShopItem> filteredList = getItemsFromCurrentCalendarParameter(shopItems, Calendar.YEAR);
+                currentDisplayedList = getItemsFromCurrentCalendarParameter(shopItems, Calendar.YEAR);
 
-                ShopItemsListAdapter adapter = new ShopItemsListAdapter(getApplicationContext(), filteredList);
+                ShopItemsListAdapter adapter = new ShopItemsListAdapter(getApplicationContext(), currentDisplayedList);
                 ListView listOfProducts = findViewById(R.id.listOfProducts);
                 listOfProducts.setAdapter(adapter);
 
@@ -70,9 +63,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                ArrayList<ShopItem> filteredList = getItemsFromCurrentCalendarParameter(shopItems, Calendar.MONTH);
+                currentDisplayedList = getItemsFromCurrentCalendarParameter(shopItems, Calendar.MONTH);
 
-                ShopItemsListAdapter adapter = new ShopItemsListAdapter(getApplicationContext(), filteredList);
+                ShopItemsListAdapter adapter = new ShopItemsListAdapter(getApplicationContext(), currentDisplayedList);
                 ListView listOfProducts = findViewById(R.id.listOfProducts);
                 listOfProducts.setAdapter(adapter);
 
@@ -88,9 +81,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                ArrayList<ShopItem> filteredList = getItemsFromCurrentCalendarParameter(shopItems, Calendar.WEEK_OF_YEAR);
+                currentDisplayedList = getItemsFromCurrentCalendarParameter(shopItems, Calendar.WEEK_OF_YEAR);
 
-                ShopItemsListAdapter adapter = new ShopItemsListAdapter(getApplicationContext(), filteredList);
+                ShopItemsListAdapter adapter = new ShopItemsListAdapter(getApplicationContext(), currentDisplayedList);
                 ListView listOfProducts = findViewById(R.id.listOfProducts);
                 listOfProducts.setAdapter(adapter);
 
@@ -98,7 +91,15 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        listOfProducts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                Log.d("ITEM_POS", String.valueOf(position));
+
+                ShopItem selectedShopItem;
+
+            }
+        });
 
     }
 
