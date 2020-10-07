@@ -2,6 +2,7 @@ package com.example.basic_project;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -210,9 +211,20 @@ public class MainActivity extends AppCompatActivity {
         final int SIZE = 1000;
         shopItems = new ArrayList<>();
 
+        int[] productImages = new int[5];
+
+        productImages[0] = R.drawable.apple;
+        productImages[1] = R.drawable.cereal;
+        productImages[2] = R.drawable.doritos;
+        productImages[3] = R.drawable.ketchup;
+        productImages[4] = R.drawable.milk_gallon;
+
+
         for (int i = 0; i < SIZE; i++) {
 
-            shopItems.add(getRandomShopItemData("EXAMPLE_TEST", R.drawable.milk_gallon));
+            int imageIndex = (i % productImages.length);
+
+            shopItems.add(getRandomShopItemData("EXAMPLE_TEST", productImages[imageIndex]));
 
         }
 
