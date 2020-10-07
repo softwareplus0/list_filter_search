@@ -224,7 +224,7 @@ public class MainActivity extends AppCompatActivity {
 
             int imageIndex = (i % productImages.length);
 
-            shopItems.add(getRandomShopItemData("EXAMPLE_TEST", productImages[imageIndex]));
+            shopItems.add(getRandomShopItemData("EXAMPLE_TEST_" + i, productImages[imageIndex]));
 
         }
 
